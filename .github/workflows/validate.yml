@@ -1,0 +1,63 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  TREE_RING_VERSION: "0.14.0"
+  TREE_RING_LINUX_X86_64_SHA256: "c72191aca81f195472272a1962df354fe0af04a08b01a7472a1faf987cd177fa"
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+
+      - name: Install checksum-pinned Tree Ring v0.14
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive_name="tree-ring-memory-${TREE_RING_VERSION}-linux-x86_64.tar.gz"
+          archive_path="${RUNNER_TEMP}/${archive_name}"
+          release_url="https://github.com/TerminallyLazy/Tree-Ring-Memory/releases/download/v${TREE_RING_VERSION}/${archive_name}"
+          extract_root="${RUNNER_TEMP}/tree-ring-${TREE_RING_VERSION}"
+
+          curl \
+            --proto '=https' \
+            --tlsv1.2 \
+            --fail \
+            --location \
+            --silent \
+            --show-error \
+            --output "${archive_path}" \
+            "${release_url}"
+          printf '%s  %s\n' \
+            "${TREE_RING_LINUX_X86_64_SHA256}" \
+            "${archive_path}" \
+            | sha256sum --check --status
+
+          while IFS= read -r entry; do
+            case "${entry}" in
+              /*|../*|*/../*|*/..) exit 1 ;;
+            esac
+          done < <(tar -tzf "${archive_path}")
+
+          mkdir -p "${extract_root}"
+          tar -xzf "${archive_path}" -C "${extract_root}"
+          binary_path="${extract_root}/tree-ring-memory-${TREE_RING_VERSION}-linux-x86_64/tree-ring"
+          test -x "${binary_path}"
+          test "$("${binary_path}" --version)" = "tree-ring ${TREE_RING_VERSION}"
+          printf 'TREE_RING_BIN=%s\n' "${binary_path}" >> "${GITHUB_ENV}"
+
+      - name: Validate plugin package
+        run: sh scripts/validate-plugin.sh
+
+      - name: Smoke Tree Ring v0.14 integration
+        shell: bash
+        run: bash scripts/smoke_v014.sh
