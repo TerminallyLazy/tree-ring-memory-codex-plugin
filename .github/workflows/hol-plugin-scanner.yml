@@ -15,11 +15,11 @@ jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Validate v0.14 wrapper contract
         run: sh scripts/validate-plugin.sh
       - name: HOL Plugin Scanner
-        uses: hashgraph-online/ai-plugin-scanner-action@d38d84308e670972f6534739dbc193b2c2dcc163
+        uses: hashgraph-online/ai-plugin-scanner-action@5d17bb20ed8878ef1e82ed3ddf433522dbd36b26
         with:
           plugin_dir: "."
           mode: scan
