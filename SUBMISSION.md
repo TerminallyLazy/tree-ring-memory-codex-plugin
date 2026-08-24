@@ -7,7 +7,7 @@
 - Category: Developer Tools
 - Short description: Local-first memory lifecycle guidance for coding agents.
 - Website: <https://terminallylazy.github.io/Tree-Ring-Memory/>
-- Support: <https://github.com/TerminallyLazy/tree-ring-memory-codex-plugin/issues>
+- Support: <https://github.com/TerminallyLazy/Tree-Ring-Memory/issues>
 - Privacy: <https://github.com/TerminallyLazy/tree-ring-memory-codex-plugin/blob/main/PRIVACY.md>
 - Terms: <https://github.com/TerminallyLazy/tree-ring-memory-codex-plugin/blob/main/TERMS.md>
 - Source: <https://github.com/TerminallyLazy/tree-ring-memory-codex-plugin>
@@ -77,13 +77,15 @@ Long description:
 
 ## Release Notes
 
-Version 0.3.1 of the v0.14-compatible skills-only package removes
-`interface.screenshots`, which OpenAI ZIP ingestion does not allow for
-skills-only plugins. It retains runtime preflight, receipt-backed harness
-readiness, exact non-active states, same-host coordination rules, the logo and
-composer icon, and explicit privacy-safe fallback when local execution is
-unavailable. The plugin has no MCP server, hosted service, credentials,
-telemetry, or reviewer account requirement.
+Version 0.3.2 of the v0.14-compatible skills-only package keeps coordinator
+capabilities out of shell history by requiring a shell-appropriate no-echo
+prompt or approved secret-manager injection, and routes support and security
+reports through the canonical repository. It retains the v0.3.1 ZIP-ingestion
+fix that removed unsupported `interface.screenshots`, plus runtime preflight,
+receipt-backed harness readiness, exact non-active states, same-host
+coordination rules, the logo and composer icon, and explicit privacy-safe
+fallback when local execution is unavailable. The plugin has no MCP server,
+hosted service, credentials, telemetry, or reviewer account requirement.
 
 ## Review Note
 

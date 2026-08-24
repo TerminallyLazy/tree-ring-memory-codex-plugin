@@ -30,8 +30,8 @@ root = Path(".")
 manifest = json.loads((root / ".codex-plugin/plugin.json").read_text())
 if manifest.get("name") != "tree-ring-memory":
     raise SystemExit("plugin name must remain tree-ring-memory")
-if manifest.get("version") != "0.3.1":
-    raise SystemExit("wrapper version must be 0.3.1")
+if manifest.get("version") != "0.3.2":
+    raise SystemExit("wrapper version must be 0.3.2")
 
 interface = manifest.get("interface", {})
 prompts = interface.get("defaultPrompt", [])
@@ -48,9 +48,22 @@ for key in ("composerIcon", "logo"):
 if "screenshots" in interface:
     raise SystemExit("skills-only ZIP manifests must not declare interface.screenshots")
 
-for required in ("PRIVACY.md", "TERMS.md", "SUBMISSION.md"):
+for required in ("PRIVACY.md", "SECURITY.md", "TERMS.md", "SUBMISSION.md"):
     if not (root / required).is_file():
         raise SystemExit(f"missing publication material: {required}")
+
+public_text = "\n".join(
+    path.read_text(encoding="utf-8")
+    for path in root.rglob("*")
+    if path.is_file()
+    and ".git" not in path.parts
+    and path != root / "scripts" / "validate-plugin.sh"
+    and path.suffix.lower() in {".json", ".md", ".py", ".sh", ".toml", ".txt", ".yaml", ".yml"}
+)
+if "export TREE_RING_COORDINATOR_TOKEN='<" in public_text:
+    raise SystemExit("token-bearing export example must not appear in the package")
+if "tree-ring-memory-codex-plugin/issues" in public_text:
+    raise SystemExit("support and security links must use the canonical repository")
 PY
 
 assert_contains "$README" 'CLI **>= 0.14.0**'
@@ -67,6 +80,7 @@ assert_contains "$SKILL" 'tree-ring integrations status'
 assert_contains "$SKILL" 'configured-awaiting-proof'
 assert_contains "$SKILL" '--operation-id'
 assert_contains "$SKILL" 'TREE_RING_COORDINATOR_TOKEN'
+assert_contains "$SKILL" 'history-safe, no-echo'
 assert_contains "$SKILL" 'same-host local-filesystem processes'
 assert_contains "$SKILL" 'schema v3 fences'
 assert_contains "$SKILL" 'operation is unsupported'
