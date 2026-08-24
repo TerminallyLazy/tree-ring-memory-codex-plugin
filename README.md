@@ -6,7 +6,7 @@ This plugin packages one Codex skill that teaches agents when to recall, write,
 audit, consolidate, and forget project memory using the open-source
 [Tree Ring Memory](https://github.com/TerminallyLazy/Tree-Ring-Memory) CLI.
 
-Plugin `0.3.1` requires Tree Ring Memory CLI **>= 0.14.0**. The minimum is
+Plugin `0.3.2` requires Tree Ring Memory CLI **>= 0.14.0**. The minimum is
 intentional: v0.14 adds receipt-backed harness readiness on top of the v0.13
 schema-v3, coordinated-write, and idempotency contracts used by this guidance.
 
@@ -137,16 +137,18 @@ coordinator should own shared publication:
 
 ```bash
 tree-ring --root .tree-ring policy enable --coordinator release-coordinator
-export TREE_RING_COORDINATOR_TOKEN='<one-time capability printed by enable>'
+# Set and export TREE_RING_COORDINATOR_TOKEN with a history-safe, no-echo prompt
+# supported by your shell, or inject it through an approved secret manager.
 tree-ring --root .tree-ring policy status
 tree-ring --root .tree-ring policy audit --limit 100
 ```
 
 The capability is printed once. Put it only in
 `TREE_RING_COORDINATOR_TOKEN`; never pass it as a CLI flag or retain it in
-memory, logs, source refs, transcripts, scripts, or committed files. Inject it
-only into coordinator processes and launch ordinary workers with the variable
-unset.
+memory, logs, source refs, transcripts, scripts, or committed files. Do not
+paste it into an `export` command; use a history-safe, no-echo prompt supported
+by the current shell or approved secret-manager injection. Inject it only into
+coordinator processes and launch ordinary workers with the variable unset.
 
 In Coordinated mode, the coordinator capability is required for shared or
 non-agent writes, heartwood creation/promotion, import, persisted DOX/Revolve
