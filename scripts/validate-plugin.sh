@@ -30,8 +30,8 @@ root = Path(".")
 manifest = json.loads((root / ".codex-plugin/plugin.json").read_text())
 if manifest.get("name") != "tree-ring-memory":
     raise SystemExit("plugin name must remain tree-ring-memory")
-if manifest.get("version") != "0.3.0":
-    raise SystemExit("wrapper version must be 0.3.0")
+if manifest.get("version") != "0.3.1":
+    raise SystemExit("wrapper version must be 0.3.1")
 
 interface = manifest.get("interface", {})
 prompts = interface.get("defaultPrompt", [])
@@ -45,9 +45,8 @@ for key in ("composerIcon", "logo"):
     if not path or not (root / path).is_file():
         raise SystemExit(f"missing interface asset: {key}")
 
-screenshots = interface.get("screenshots", [])
-if len(screenshots) != 3 or any(not (root / path).is_file() for path in screenshots):
-    raise SystemExit("three real screenshots are required")
+if "screenshots" in interface:
+    raise SystemExit("skills-only ZIP manifests must not declare interface.screenshots")
 
 for required in ("PRIVACY.md", "TERMS.md", "SUBMISSION.md"):
     if not (root / required).is_file():

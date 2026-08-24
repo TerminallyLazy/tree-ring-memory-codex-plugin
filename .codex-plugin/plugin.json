@@ -1,6 +1,6 @@
 {
   "name": "tree-ring-memory",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Local-first memory lifecycle and receipt-backed harness guidance for coding agents using Tree Ring Memory v0.14+.",
   "author": {
     "name": "TerminallyLazy",
@@ -43,11 +43,6 @@
     ],
     "brandColor": "#2F7D5C",
     "composerIcon": "./assets/tree-ring-memory-logo.png",
-    "logo": "./assets/tree-ring-memory-logo.png",
-    "screenshots": [
-      "./assets/screenshot-dashboard.png",
-      "./assets/screenshot-recall.png",
-      "./assets/screenshot-evidence.png"
-    ]
+    "logo": "./assets/tree-ring-memory-logo.png"
   }
 }

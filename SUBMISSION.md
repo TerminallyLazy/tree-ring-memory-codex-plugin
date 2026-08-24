@@ -77,11 +77,13 @@ Long description:
 
 ## Release Notes
 
-Initial OpenAI submission of the v0.14-compatible skills-only package. It adds
-runtime preflight, receipt-backed harness readiness, exact non-active states,
-same-host coordination rules, and explicit privacy-safe fallback when local
-execution is unavailable. The plugin has no MCP server, hosted service,
-credentials, telemetry, or reviewer account requirement.
+Version 0.3.1 of the v0.14-compatible skills-only package removes
+`interface.screenshots`, which OpenAI ZIP ingestion does not allow for
+skills-only plugins. It retains runtime preflight, receipt-backed harness
+readiness, exact non-active states, same-host coordination rules, the logo and
+composer icon, and explicit privacy-safe fallback when local execution is
+unavailable. The plugin has no MCP server, hosted service, credentials,
+telemetry, or reviewer account requirement.
 
 ## Review Note
 

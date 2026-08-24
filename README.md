@@ -6,9 +6,13 @@ This plugin packages one Codex skill that teaches agents when to recall, write,
 audit, consolidate, and forget project memory using the open-source
 [Tree Ring Memory](https://github.com/TerminallyLazy/Tree-Ring-Memory) CLI.
 
-Plugin `0.3.0` requires Tree Ring Memory CLI **>= 0.14.0**. The minimum is
+Plugin `0.3.1` requires Tree Ring Memory CLI **>= 0.14.0**. The minimum is
 intentional: v0.14 adds receipt-backed harness readiness on top of the v0.13
 schema-v3, coordinated-write, and idempotency contracts used by this guidance.
+
+The public ZIP is a skills-only package. It intentionally omits
+`interface.screenshots`, which OpenAI's ZIP ingestion does not accept for this
+package type; the logo and composer icon remain available.
 
 It does not run a background service, scrape chats, or capture transcripts.
 The active agent chooses when a memory action is useful, source-linked, and
