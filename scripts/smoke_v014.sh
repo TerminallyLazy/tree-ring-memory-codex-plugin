@@ -192,18 +192,40 @@ results = value if isinstance(value, list) else value["results"]
 raise SystemExit(0 if len(results) == 1 else 1)' \
   <<<"${fan_in}"
 
-TREE_RING_COORDINATOR_TOKEN="${coordinator_capability}" \
-TREE_RING_AGENT_PROFILE=coordinator \
-TREE_RING_WORKFLOW_ID=release-smoke \
-TREE_RING_SESSION_ID=attempt-1 \
-  "${tree_ring_bin}" \
-  --root "${store_root}" \
-  remember "Coordinator-approved shared result." \
-  --event-type lesson \
-  --scope project \
-  --operation-id coordinator-shared-v1 \
-  --source-ref runs/release-smoke/coordinator.json \
-  >/dev/null
+printf '%s' "${coordinator_capability}" | \
+  TREE_RING_TEST_BINARY="${tree_ring_bin}" \
+  TREE_RING_TEST_ROOT="${store_root}" \
+  python3 -c '
+import os
+import subprocess
+import sys
+
+environment = os.environ.copy()
+environment["TREE_RING_COORDINATOR" + "_TOKEN"] = sys.stdin.read()
+environment["TREE_RING_AGENT_PROFILE"] = "coordinator"
+environment["TREE_RING_WORKFLOW_ID"] = "release-smoke"
+environment["TREE_RING_SESSION_ID"] = "attempt-1"
+subprocess.run(
+    [
+        environment["TREE_RING_TEST_BINARY"],
+        "--root",
+        environment["TREE_RING_TEST_ROOT"],
+        "remember",
+        "Coordinator-approved shared result.",
+        "--event-type",
+        "lesson",
+        "--scope",
+        "project",
+        "--operation-id",
+        "coordinator-shared-v1",
+        "--source-ref",
+        "runs/release-smoke/coordinator.json",
+    ],
+    check=True,
+    env=environment,
+    stdout=subprocess.DEVNULL,
+)
+'
 
 status_output=$(
   "${tree_ring_bin}" --root "${store_root}" policy status

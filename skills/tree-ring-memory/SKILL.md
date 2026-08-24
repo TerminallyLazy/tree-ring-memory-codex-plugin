@@ -2,6 +2,7 @@
 name: tree-ring-memory
 description: Guides AI agents in using Tree Ring Memory for durable recall, project decisions, user preferences, warnings, future seeds, privacy-safe memory capture, and lifecycle-aware forgetting.
 version: 0.14.0
+license: MIT
 tags: ["memory", "agents", "recall", "privacy", "projects", "dox", "revolve", "skills", "cli"]
 triggers:
   - "remember this"
