@@ -6,9 +6,10 @@ This plugin packages one Codex skill that teaches agents when to recall, write,
 audit, consolidate, and forget project memory using the open-source
 [Tree Ring Memory](https://github.com/TerminallyLazy/Tree-Ring-Memory) CLI.
 
-Plugin `0.3.2` requires Tree Ring Memory CLI **>= 0.14.0**. The minimum is
-intentional: v0.14 adds receipt-backed harness readiness on top of the v0.13
-schema-v3, coordinated-write, and idempotency contracts used by this guidance.
+Plugin `0.3.3` requires Tree Ring Memory CLI **>= 0.15.0**. The minimum adds
+verified project-local bootstrap and scope-preserving CLI updates on top of the
+receipt-backed harness, schema-v3, coordinated-write, and idempotency contracts
+used by this guidance.
 
 The public ZIP is a skills-only package. It intentionally omits
 `interface.screenshots`, which OpenAI's ZIP ingestion does not accept for this
@@ -31,18 +32,28 @@ privacy-safe.
   observed use in a fresh agent session.
 - Explicit forgetting, redaction, and supersession guidance.
 - DOX and Revolve adapter usage with dry-run-first guardrails.
+- Verified project-local CLI bootstrap and scope-preserving update guidance.
 
 ## Install Tree Ring Memory
 
-macOS ARM64 with Homebrew:
+From the actual project root, after the user has authorized Tree Ring setup:
+
+Download the official version-pinned `v0.15.0/install.sh` to a temporary file,
+verify its SHA-256 is
+`ef0d5eb8f09cbe2e4c3abe80ee9a98a56759c89ad4ddd103d6c68314cd653ade`, inspect
+it, then run these commands from the project root:
 
 ```bash
-brew tap TerminallyLazy/tree-ring
-brew install tree-ring
+sh <verified-installer-path> --project --init --release latest --no-animation
+.tree-ring/bin/tree-ring --root .tree-ring integrations status --verbose
 ```
 
-For other install paths, use the canonical project README:
-<https://github.com/TerminallyLazy/Tree-Ring-Memory#install>
+Do not pipe a network response directly to a shell.
+
+The verified prebuilt installer supports macOS ARM64 and Linux x86_64. Homebrew
+remains available on macOS with `brew install tree-ring`. The agent may proceed
+when the user's request already authorizes setup; otherwise it obtains
+permission before the download or software installation.
 
 Verify the installed core before using this wrapper:
 
@@ -50,11 +61,15 @@ Verify the installed core before using this wrapper:
 tree-ring --version
 ```
 
-The result must be `tree-ring 0.14.0` or newer.
+The result must be `tree-ring 0.15.0` or newer.
 
-If the CLI is absent or older, the plugin reports the limitation. It does not
-install or upgrade software, edit shell configuration, or claim a memory action
-ran without explicit user permission and observed command output.
+Use `tree-ring update --check` for a read-only release check. With update
+authorization, `tree-ring update` verifies official assets and preserves the
+active project-local, direct-prefix, or Homebrew scope. The plugin does not edit
+shell configuration, change global installation scope, or claim a memory action
+ran without the required authorization and observed command output. For other
+install paths, use the canonical project README:
+<https://github.com/TerminallyLazy/Tree-Ring-Memory#install>.
 
 ## Use
 
@@ -174,8 +189,8 @@ backup.
 ## Canonical Project
 
 - Framework repo: <https://github.com/TerminallyLazy/Tree-Ring-Memory>
-- Canonical v0.14 skill: <https://github.com/TerminallyLazy/Tree-Ring-Memory/blob/v0.14.0/skills/tree-ring-memory/SKILL.md>
-- v0.14 release: <https://github.com/TerminallyLazy/Tree-Ring-Memory/releases/tag/v0.14.0>
+- Canonical v0.15 skill: <https://github.com/TerminallyLazy/Tree-Ring-Memory/blob/v0.15.1/skills/tree-ring-memory/SKILL.md>
+- v0.15 release: <https://github.com/TerminallyLazy/Tree-Ring-Memory/releases/tag/v0.15.1>
 - Launch page: <https://terminallylazy.github.io/Tree-Ring-Memory/>
 - Homebrew tap: <https://github.com/TerminallyLazy/homebrew-tree-ring>
 
