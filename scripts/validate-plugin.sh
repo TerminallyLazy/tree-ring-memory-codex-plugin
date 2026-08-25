@@ -30,8 +30,8 @@ root = Path(".")
 manifest = json.loads((root / ".codex-plugin/plugin.json").read_text())
 if manifest.get("name") != "tree-ring-memory":
     raise SystemExit("plugin name must remain tree-ring-memory")
-if manifest.get("version") != "0.3.2":
-    raise SystemExit("wrapper version must be 0.3.2")
+if manifest.get("version") != "0.3.3":
+    raise SystemExit("wrapper version must be 0.3.3")
 
 interface = manifest.get("interface", {})
 prompts = interface.get("defaultPrompt", [])
@@ -66,10 +66,12 @@ if "tree-ring-memory-codex-plugin/issues" in public_text:
     raise SystemExit("support and security links must use the canonical repository")
 PY
 
-assert_contains "$README" 'CLI **>= 0.14.0**'
+assert_contains "$README" 'CLI **>= 0.15.0**'
 assert_contains "$README" 'Receipt-Backed Harness Readiness'
-assert_contains "$SKILL" 'version: 0.14.0'
-assert_contains "$SKILL" 'Runtime Preflight'
+assert_contains "$SKILL" 'version: "0.15.0"'
+assert_contains "$SKILL" 'Runtime Bootstrap And Updates'
+assert_contains "$SKILL" '--project --init --release latest --no-animation'
+assert_contains "$SKILL" 'tree-ring update --check'
 assert_contains "$SKILL" 'DOX Contract Flow'
 assert_contains "$SKILL" 'tree-ring dox sync --source-root <path> --dry-run'
 assert_contains "$SKILL" 'Certification Boundary'

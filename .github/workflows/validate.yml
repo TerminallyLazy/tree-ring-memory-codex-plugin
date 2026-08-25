@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 env:
-  TREE_RING_VERSION: "0.14.0"
-  TREE_RING_LINUX_X86_64_SHA256: "c72191aca81f195472272a1962df354fe0af04a08b01a7472a1faf987cd177fa"
+  TREE_RING_VERSION: "0.15.0"
+  TREE_RING_LINUX_X86_64_SHA256: "9b47873268dbb94712a49b02bd785cc69507facee1e879e46e6922778b4afbe6"
 
 jobs:
   validate:
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
 
-      - name: Install checksum-pinned Tree Ring v0.14
+      - name: Install checksum-pinned Tree Ring v0.15
         shell: bash
         run: |
           set -euo pipefail
@@ -58,6 +58,6 @@ jobs:
       - name: Validate plugin package
         run: sh scripts/validate-plugin.sh
 
-      - name: Smoke Tree Ring v0.14 integration
+      - name: Smoke Tree Ring v0.15 integration
         shell: bash
-        run: bash scripts/smoke_v014.sh
+        run: bash scripts/smoke_v015.sh

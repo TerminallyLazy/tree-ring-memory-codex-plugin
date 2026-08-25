@@ -17,8 +17,8 @@ Long description:
 > Tree Ring Memory gives coding agents a lifecycle-aware practice for project
 > recall, durable decisions, receipt-backed harness readiness, same-host
 > fan-out/fan-in, idempotent worker writes, coordinator-authorized shared
-> publication, explicit forgetting, and privacy-safe memory capture using the
-> open-source Tree Ring Memory 0.14 CLI.
+> publication, explicit forgetting, verified project setup, scope-preserving
+> updates, and privacy-safe memory capture using Tree Ring Memory 0.15.
 
 ## Starter Prompts
 
@@ -31,12 +31,12 @@ Long description:
 1. Prompt: "Recall what we decided about release behavior in this project."
    Expected behavior: check the local runtime and project guidance, run scoped
    recall, and summarize source-linked results. Expected shape: concise memories
-   with confidence or source context. Fixture: an initialized v0.14 store with a
+   with confidence or source context. Fixture: an initialized v0.15 store with a
    project-scoped release decision.
 2. Prompt: "Remember that the signed archive must be inspected before release."
    Expected behavior: confirm the lesson is durable and privacy-safe, then create
    one concise source-linked memory. Expected shape: the observed CLI result and
-   stored memory identifier. Fixture: an initialized writable v0.14 store.
+   stored memory identifier. Fixture: an initialized writable v0.15 store.
 3. Prompt: "Audit this store for stale or sensitive memory without changing it."
    Expected behavior: use report-only audit and maintenance commands. Expected
    shape: grouped findings and recommended follow-up, with no mutation claim.
@@ -49,7 +49,7 @@ Long description:
 5. Prompt: "Is Tree Ring active for this Codex project?"
    Expected behavior: run verbose integration status and report its exact state;
    configuration alone must not be called active. Expected shape: harness name,
-   state, capability, and next step. Fixture: a configured v0.14 project without
+   state, capability, and next step. Fixture: a configured v0.15 project without
    a fresh matching receipt.
 6. Prompt: "Preview the DOX contracts in this repository before syncing them."
    Expected behavior: read the applicable `AGENTS.md` chain, run DOX sync in
@@ -77,15 +77,14 @@ Long description:
 
 ## Release Notes
 
-Version 0.3.2 of the v0.14-compatible skills-only package keeps coordinator
-capabilities out of shell history by requiring a shell-appropriate no-echo
-prompt or approved secret-manager injection, and routes support and security
-reports through the canonical repository. It retains the v0.3.1 ZIP-ingestion
-fix that removed unsupported `interface.screenshots`, plus runtime preflight,
-receipt-backed harness readiness, exact non-active states, same-host
-coordination rules, the logo and composer icon, and explicit privacy-safe
-fallback when local execution is unavailable. The plugin has no MCP server,
-hosted service, credentials, telemetry, or reviewer account requirement.
+Version 0.3.3 of the v0.15-compatible skills-only package adds verified
+project-local bootstrap, project-root-safe initialization, and scope-preserving
+CLI update guidance. It retains the ZIP-ingestion fix that omits unsupported
+`interface.screenshots`, plus receipt-backed harness readiness, same-host
+coordination rules, safe capability handling, the logo and composer icon, and
+guidance-only fallback when local execution is unavailable. The plugin has no
+MCP server, hosted service, credentials, telemetry, or reviewer account
+requirement.
 
 ## Review Note
 

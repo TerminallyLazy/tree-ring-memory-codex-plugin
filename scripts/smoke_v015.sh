@@ -7,7 +7,7 @@ if [[ "${tree_ring_bin}" == */* ]]; then
 else
   command -v "${tree_ring_bin}" >/dev/null
 fi
-test "$("${tree_ring_bin}" --version)" = "tree-ring 0.14.0"
+test "$("${tree_ring_bin}" --version)" = "tree-ring 0.15.0"
 
 smoke_base="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
 smoke_base="${smoke_base%/}"
@@ -255,4 +255,4 @@ snapshot_tree "${store_root}" > "${smoke_dir}/upgraded-before.sha256"
 snapshot_tree "${store_root}" > "${smoke_dir}/upgraded-after.sha256"
 cmp "${smoke_dir}/upgraded-before.sha256" "${smoke_dir}/upgraded-after.sha256"
 
-printf 'Tree Ring v0.14 integration smoke passed\n'
+printf 'Tree Ring v0.15 integration smoke passed\n'
