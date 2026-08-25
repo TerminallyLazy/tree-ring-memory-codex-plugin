@@ -68,7 +68,7 @@ PY
 
 assert_contains "$README" 'CLI **>= 0.15.0**'
 assert_contains "$README" 'Receipt-Backed Harness Readiness'
-assert_contains "$SKILL" 'version: "0.15.0"'
+assert_contains "$SKILL" 'version: "0.15.1"'
 assert_contains "$SKILL" 'Runtime Bootstrap And Updates'
 assert_contains "$SKILL" '--project --init --release latest --no-animation'
 assert_contains "$SKILL" 'tree-ring update --check'
