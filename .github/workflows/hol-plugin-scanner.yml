@@ -19,7 +19,7 @@ jobs:
       - name: Validate v0.15 wrapper contract
         run: sh scripts/validate-plugin.sh
       - name: HOL Plugin Scanner
-        uses: hashgraph-online/ai-plugin-scanner-action@5d17bb20ed8878ef1e82ed3ddf433522dbd36b26
+        uses: hashgraph-online/ai-plugin-scanner-action@6398407f1bd44465c99054442024d4e5ffbed164
         with:
           plugin_dir: "."
           mode: scan
