@@ -7,7 +7,7 @@ if [[ "${tree_ring_bin}" == */* ]]; then
 else
   command -v "${tree_ring_bin}" >/dev/null
 fi
-test "$("${tree_ring_bin}" --version)" = "tree-ring 0.15.0"
+test "$("${tree_ring_bin}" --version)" = "tree-ring 0.15.7"
 
 smoke_base="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
 smoke_base="${smoke_base%/}"
