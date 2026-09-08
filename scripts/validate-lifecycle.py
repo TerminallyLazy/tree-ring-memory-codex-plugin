@@ -2,6 +2,7 @@
 """Verify packaged lifecycle events, stdin forwarding, and managed-hook ownership."""
 import json, os, subprocess, tempfile
 from pathlib import Path
+from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 LIFECYCLE_EVENTS = {"SessionStart", "SubagentStart", "Stop", "SubagentStop"}
 
