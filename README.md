@@ -14,9 +14,11 @@ used by this guidance.
 The repository plugin includes native lifecycle hooks and requires CLI `0.15.6`
 or newer for automatic recall. Build the separate public-directory ZIP with
 `python3 packaging/build-codex-skills-only.py tree-ring-memory-codex-skills-only.zip`.
-That generated ZIP is a skills-only package. It intentionally omits
-`interface.screenshots`, which OpenAI's ZIP ingestion does not accept for this
-package type; the logo and composer icon remain available.
+That generated ZIP includes skills and native Codex lifecycle hooks. The portal
+calls the route "Skills only" because this plugin has no MCP server. The upload
+preserves executable hook scripts and excludes Claude metadata and commands.
+Hooks require Codex or ChatGPT Work, an available CLI, and host trust; ordinary
+Chat remains guidance-only. See [OpenAI's current compatibility guidance](https://developers.openai.com/plugins/guides/submit-claude-plugin).
 
 It does not run a background service, scrape chats, or capture transcripts.
 The active agent chooses when a memory action is useful, source-linked, and
@@ -261,9 +263,8 @@ project and plugin hooks.
 
 `integrations status --verbose` reports the last validated recall's result
 count and query class. A zero-result receipt proves the check ran; it does not
-prove that useful context was found. A skills-only plugin installation has no
-automatic lifecycle hooks; enable the repository plugin or configure the
-project with the CLI to obtain them. A newly configured Codex hook still needs
+prove that useful context was found. Older skills-only packages omitted
+automatic lifecycle hooks. Current Git and public upload packages include them. A newly configured Codex hook still needs
 the host's trust flow and a new session before automatic execution can be
 verified.
 
