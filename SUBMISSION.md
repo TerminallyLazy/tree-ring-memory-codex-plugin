@@ -77,7 +77,7 @@ Long description:
 
 ## Release Notes
 
-Version 0.3.3 of the v0.15-compatible skills-only package adds verified
+Version 0.3.6 of the v0.15-compatible skills-only package adds verified
 project-local bootstrap, project-root-safe initialization, and scope-preserving
 CLI update guidance. It retains the ZIP-ingestion fix that omits unsupported
 `interface.screenshots`, plus receipt-backed harness readiness, same-host
@@ -94,3 +94,12 @@ skill remains guidance-only and explicitly forbids claims that a command ran.
 OpenAI's Claude-plugin migration guide asks local-execution plugins to contact
 their OpenAI partner; disclose this boundary in the submission rather than
 representing the package as a hosted integration.
+
+## Repository Lifecycle Distribution
+
+The Git marketplace package now includes SessionStart, SubagentStart, Stop, and
+SubagentStop hooks backed by CLI 0.15.6. The public-directory upload must use
+`packaging/build-codex-skills-only.py`; it excludes hooks and does not promise
+automatic invocation. Updating the Git repository does not update a previously
+reviewed directory snapshot. Submit the versioned ZIP through the directory
+review channel separately.

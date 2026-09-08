@@ -30,8 +30,8 @@ root = Path(".")
 manifest = json.loads((root / ".codex-plugin/plugin.json").read_text())
 if manifest.get("name") != "tree-ring-memory":
     raise SystemExit("plugin name must remain tree-ring-memory")
-if manifest.get("version") != "0.3.3":
-    raise SystemExit("wrapper version must be 0.3.3")
+if manifest.get("version") != "0.3.6":
+    raise SystemExit("wrapper version must be 0.3.6")
 
 interface = manifest.get("interface", {})
 prompts = interface.get("defaultPrompt", [])
@@ -90,3 +90,5 @@ assert_contains "$SKILL" 'maintenance with apply or repair flags'
 assert_contains "$SKILL" 'launch every ordinary worker with `TREE_RING_COORDINATOR_TOKEN` unset'
 
 printf 'Tree Ring Memory Codex wrapper contract is valid.\n'
+
+python3 scripts/validate-lifecycle.py

@@ -7,7 +7,7 @@
     "url": "https://github.com/TerminallyLazy"
   },
   "homepage": "https://github.com/TerminallyLazy/Tree-Ring-Memory",
-  "repository": "https://github.com/TerminallyLazy/tree-ring-memory-codex-plugin",
+  "repository": "https://github.com/TerminallyLazy/Tree-Ring-Memory",
   "license": "MIT",
   "keywords": [
     "codex",
@@ -22,7 +22,6 @@
     "skills"
   ],
   "skills": "./skills/",
-  "hooks": "./hooks/codex-hooks.json",
   "interface": {
     "displayName": "Tree Ring Memory",
     "shortDescription": "Local-first memory lifecycle guidance for Codex agents.",
