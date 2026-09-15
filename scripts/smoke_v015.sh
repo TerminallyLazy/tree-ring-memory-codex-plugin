@@ -7,7 +7,7 @@ if [[ "${tree_ring_bin}" == */* ]]; then
 else
   command -v "${tree_ring_bin}" >/dev/null
 fi
-test "$("${tree_ring_bin}" --version)" = "tree-ring 0.15.7"
+test "$("${tree_ring_bin}" --version)" = "tree-ring 0.15.12"
 
 smoke_base="${RUNNER_TEMP:-${TMPDIR:-/tmp}}"
 smoke_base="${smoke_base%/}"
@@ -45,6 +45,63 @@ if not isinstance(integrations, list) or not integrations:
 if any(item.get("state") == "active" for item in integrations):
     raise SystemExit("fresh configuration must not report active without a receipt")
 PY
+
+# Persisted DOX requires the release's source-root guard. Repeating one source
+# keeps stable identities, while a different root cannot replace its guidance.
+dox_store="${smoke_dir}/dox-store/.tree-ring"
+dox_first="${smoke_dir}/dox-first"
+dox_other="${smoke_dir}/dox-other"
+mkdir -p "${dox_first}" "${dox_other}"
+printf '# Rules\n\nKeep the original source guidance.\n' > "${dox_first}/AGENTS.md"
+printf '# Rules\n\nConflicting source guidance must not replace it.\n' > "${dox_other}/AGENTS.md"
+"${tree_ring_bin}" --root "${dox_store}" --json dox sync \
+  --source-root "${dox_first}" --project release-dox --dry-run \
+  > "${smoke_dir}/dox-preview.json"
+test ! -e "${dox_store}"
+"${tree_ring_bin}" --root "${dox_store}" init >/dev/null
+for attempt in 1 2; do
+  "${tree_ring_bin}" --root "${dox_store}" --json dox sync \
+    --source-root "${dox_first}" --project release-dox \
+    > "${smoke_dir}/dox-write-${attempt}.json"
+done
+"${tree_ring_bin}" --root "${dox_store}" export \
+  --output "${smoke_dir}/dox-before.jsonl" >/dev/null
+TREE_RING_DOX_EXPORT="${smoke_dir}/dox-before.jsonl" python3 - <<'PY_DOX'
+import json
+import os
+from pathlib import Path
+
+rows = [json.loads(line) for line in Path(os.environ["TREE_RING_DOX_EXPORT"]).read_text().splitlines()]
+records = [row["memory"] for row in rows if row["type"] == "memory_event"]
+assert len(records) == 1, "repeated DOX sync must not create duplicates"
+assert "Keep the original source guidance." in records[0]["summary"]
+assert any(link.get("type") == "dox-root" for link in records[0]["links"]), "DOX source-root provenance is required"
+PY_DOX
+if "${tree_ring_bin}" --root "${dox_store}" dox sync \
+  --source-root "${dox_other}" --project release-dox \
+  > "${smoke_dir}/dox-conflict.log" 2>&1; then
+  printf 'DOX source-root collision unexpectedly succeeded\n' >&2
+  exit 94
+fi
+TREE_RING_DOX_CONFLICT="${smoke_dir}/dox-conflict.log" python3 - <<'PY_DOX'
+import os
+from pathlib import Path
+
+assert "DOX root provenance collides" in Path(os.environ["TREE_RING_DOX_CONFLICT"]).read_text(), "DOX sync must fail specifically on the source identity guard"
+PY_DOX
+"${tree_ring_bin}" --root "${dox_store}" export \
+  --output "${smoke_dir}/dox-after.jsonl" >/dev/null
+TREE_RING_DOX_BEFORE="${smoke_dir}/dox-before.jsonl" \
+TREE_RING_DOX_AFTER="${smoke_dir}/dox-after.jsonl" python3 - <<'PY_DOX'
+import json
+import os
+from pathlib import Path
+
+def memories(path):
+    return [row["memory"] for row in map(json.loads, Path(path).read_text().splitlines()) if row["type"] == "memory_event"]
+
+assert memories(os.environ["TREE_RING_DOX_BEFORE"]) == memories(os.environ["TREE_RING_DOX_AFTER"]), "a rejected DOX batch must preserve the stored guidance"
+PY_DOX
 
 hash_file() {
   local file_path=$1

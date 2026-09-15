@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 env:
-  TREE_RING_VERSION: "0.15.7"
-  TREE_RING_LINUX_X86_64_SHA256: "5c9da887e212b1a7222205d2a661910276171a927d7677f09ec097f2cddd26b7"
+  TREE_RING_VERSION: "0.15.12"
+  TREE_RING_LINUX_X86_64_SHA256: "44aca4c82e0d9b51af54b2a9ed5447e38097cca193ecbf43ac2ae6f1b0adfbe2"
 
 jobs:
   validate:

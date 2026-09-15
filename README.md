@@ -6,7 +6,7 @@ This plugin packages one Codex skill that teaches agents when to recall, write,
 audit, consolidate, and forget project memory using the open-source
 [Tree Ring Memory](https://github.com/TerminallyLazy/Tree-Ring-Memory) CLI.
 
-Plugin `0.3.6` requires Tree Ring Memory CLI **>= 0.15.0**. The minimum adds
+Plugin `0.3.8` requires Tree Ring Memory CLI **>= 0.15.0**. The minimum adds
 verified project-local bootstrap and scope-preserving CLI updates on top of the
 receipt-backed harness, schema-v3, coordinated-write, and idempotency contracts
 used by this guidance.
@@ -94,6 +94,13 @@ CLI commands documented in the main framework repository.
 For DOX projects, it reads the applicable `AGENTS.md` chain before edits and
 keeps the live contracts authoritative. DOX sync is dry-run-first, persists only
 concise source-linked summaries, and never rewrites the source contracts.
+
+Before any DOX write, verify the selected project-local or PATH binary with
+`--version` and require CLI **0.15.11 or newer**. Older compatible runtimes may
+preview with `--dry-run`, but must not persist DOX summaries. After an authorized
+upgrade, rerun and review the preview. This DOX-only minimum adds atomic
+source-root collision checks so a conflicting batch cannot overwrite another
+project's guidance; general CLI and lifecycle-hook compatibility is unchanged.
 
 For installed-runtime evidence, use `tree-ring integrations certify` or
 `tree-ring recall-quality`. The full `scripts/certify-tree-ring.sh` release suite
@@ -194,8 +201,8 @@ backup.
 ## Canonical Project
 
 - Framework repo: <https://github.com/TerminallyLazy/Tree-Ring-Memory>
-- Canonical v0.15 skill: <https://github.com/TerminallyLazy/Tree-Ring-Memory/blob/v0.15.1/skills/tree-ring-memory/SKILL.md>
-- v0.15 release: <https://github.com/TerminallyLazy/Tree-Ring-Memory/releases/tag/v0.15.1>
+- Canonical v0.15 skill: <https://github.com/TerminallyLazy/Tree-Ring-Memory/blob/v0.15.11/skills/tree-ring-memory/SKILL.md>
+- v0.15 release: <https://github.com/TerminallyLazy/Tree-Ring-Memory/releases/tag/v0.15.11>
 - Launch page: <https://terminallylazy.github.io/Tree-Ring-Memory/>
 - Homebrew tap: <https://github.com/TerminallyLazy/homebrew-tree-ring>
 
