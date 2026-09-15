@@ -30,8 +30,8 @@ root = Path(".")
 manifest = json.loads((root / ".codex-plugin/plugin.json").read_text())
 if manifest.get("name") != "tree-ring-memory":
     raise SystemExit("plugin name must remain tree-ring-memory")
-if manifest.get("version") != "0.3.7":
-    raise SystemExit("wrapper version must be 0.3.7")
+if manifest.get("version") != "0.3.8":
+    raise SystemExit("wrapper version must be 0.3.8")
 
 interface = manifest.get("interface", {})
 prompts = interface.get("defaultPrompt", [])
@@ -68,11 +68,14 @@ PY
 
 assert_contains "$README" 'CLI **>= 0.15.0**'
 assert_contains "$README" 'Receipt-Backed Harness Readiness'
-assert_contains "$SKILL" 'version: "0.15.1"'
+assert_contains "$SKILL" 'version: "0.15.11"'
 assert_contains "$SKILL" 'Runtime Bootstrap And Updates'
 assert_contains "$SKILL" '--project --init --release latest --no-animation'
 assert_contains "$SKILL" 'tree-ring update --check'
 assert_contains "$SKILL" 'DOX Contract Flow'
+assert_contains "$SKILL" 'DOX Persistence Compatibility'
+assert_contains "$SKILL" 'DOX persistence requires Tree Ring CLI 0.15.11 or newer'
+assert_contains "$SKILL" 'Older runtimes may preview with `--dry-run`, but must not persist DOX summaries'
 assert_contains "$SKILL" 'tree-ring dox sync --source-root <path> --dry-run'
 assert_contains "$SKILL" 'Certification Boundary'
 assert_contains "$SKILL" 'tree-ring integrations certify --source-root .'

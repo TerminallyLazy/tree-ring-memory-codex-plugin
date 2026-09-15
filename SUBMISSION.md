@@ -77,7 +77,9 @@ Long description:
 
 ## Release Notes
 
-Version 0.3.7 retains native lifecycle hooks in the public upload and verified
+Version 0.3.8 requires CLI 0.15.11 or newer for DOX persistence; older compatible
+runtimes remain preview-only for DOX. It retains byte-identical native lifecycle
+hooks in the public upload and verified
 project-local bootstrap, project-root-safe initialization, and scope-preserving
 CLI update guidance. It retains the ZIP-ingestion fix that omits unsupported
 `interface.screenshots`, plus receipt-backed harness readiness, same-host
