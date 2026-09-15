@@ -77,16 +77,13 @@ Long description:
 
 ## Release Notes
 
-Version 0.3.8 requires CLI 0.15.11 or newer for DOX persistence; older compatible
-runtimes remain preview-only for DOX. It retains byte-identical native lifecycle
-hooks in the public upload and verified
-project-local bootstrap, project-root-safe initialization, and scope-preserving
-CLI update guidance. It retains the ZIP-ingestion fix that omits unsupported
-`interface.screenshots`, plus receipt-backed harness readiness, same-host
-coordination rules, safe capability handling, the logo and composer icon, and
-guidance-only fallback when local execution is unavailable. The plugin has no
-MCP server, hosted service, credentials, telemetry, or reviewer account
-requirement.
+Version 0.3.9 quietly skips projects and linked worktrees without a local
+`.tree-ring` entry. Existing or symlinked roots still reach runtime diagnostics.
+Codex deduplication now follows its effective primary-checkout root hook source
+for validated linked worktrees, without suppressing an ignored local-only hook
+or redirecting memory to the primary store. The public ZIP retains all four
+native lifecycle events and executable hook permissions. DOX persistence still
+requires CLI 0.15.11 or newer; older compatible runtimes remain preview-only.
 
 ## Review Note
 
