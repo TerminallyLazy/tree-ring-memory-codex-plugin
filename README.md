@@ -6,19 +6,29 @@ This plugin packages one Codex skill that teaches agents when to recall, write,
 audit, consolidate, and forget project memory using the open-source
 [Tree Ring Memory](https://github.com/TerminallyLazy/Tree-Ring-Memory) CLI.
 
-Plugin `0.3.9` requires Tree Ring Memory CLI **>= 0.15.0**. The minimum adds
+Plugin `0.3.10` requires Tree Ring Memory CLI **>= 0.15.0**. The minimum adds
 verified project-local bootstrap and scope-preserving CLI updates on top of the
 receipt-backed harness, schema-v3, coordinated-write, and idempotency contracts
 used by this guidance.
 
 The repository plugin includes native lifecycle hooks and requires CLI `0.15.6`
 or newer for automatic recall. Build the separate public-directory ZIP with
-`python3 packaging/build-codex-skills-only.py tree-ring-memory-codex-skills-only.zip`.
+`python3 packaging/build-codex-skills-only.py tree-ring-memory-codex-skills-only-0.3.10.zip`.
 That generated ZIP includes skills and native Codex lifecycle hooks. The portal
 calls the route "Skills only" because this plugin has no MCP server. The upload
 preserves executable hook scripts and excludes Claude metadata and commands.
 Hooks require Codex or ChatGPT Work, an available CLI, and host trust; ordinary
 Chat remains guidance-only. See [OpenAI's current compatibility guidance](https://developers.openai.com/plugins/guides/submit-claude-plugin).
+
+For the public directory, upload `tree-ring-memory-codex-skills-only-0.3.10.zip`.
+The full repository archive is intended for native distribution. The public
+profile puts skill display settings in `skills/tree-ring-memory/agents/openai.yaml`
+and omits the native skill's legacy frontmatter `metadata` block, preserving the
+instructions exactly. Its listing short description meets the directory's
+30-character limit. The native skill and all lifecycle hook bytes are unchanged.
+The `skill_metadata_ignored` message is an advisory warning; package validation
+does not prove portal acceptance or completion of its review and identity checks.
+See the [submission error reference](https://developers.openai.com/plugins/deploy/submission-errors).
 
 It does not run a background service, scrape chats, or capture transcripts.
 The active agent chooses when a memory action is useful, source-linked, and
