@@ -5,7 +5,7 @@
 - Name: Tree Ring Memory
 - Type: Skills only
 - Category: Developer Tools
-- Short description: Local-first memory lifecycle guidance for coding agents.
+- Short description: Durable memory for agents
 - Website: <https://terminallylazy.github.io/Tree-Ring-Memory/>
 - Support: <https://github.com/TerminallyLazy/Tree-Ring-Memory/issues>
 - Privacy: <https://github.com/TerminallyLazy/tree-ring-memory-codex-plugin/blob/main/PRIVACY.md>
@@ -77,13 +77,13 @@ Long description:
 
 ## Release Notes
 
-Version 0.3.9 quietly skips projects and linked worktrees without a local
-`.tree-ring` entry. Existing or symlinked roots still reach runtime diagnostics.
-Codex deduplication now follows its effective primary-checkout root hook source
-for validated linked worktrees, without suppressing an ignored local-only hook
-or redirecting memory to the primary store. The public ZIP retains all four
-native lifecycle events and executable hook permissions. DOX persistence still
-requires CLI 0.15.11 or newer; older compatible runtimes remain preview-only.
+Version 0.3.10 adds the supported skill interface to the public upload at
+`skills/tree-ring-memory/agents/openai.yaml`. The public skill omits the legacy
+frontmatter `metadata` block while preserving its instructions exactly, and the
+public listing uses a short description within the directory's 30-character
+limit. Native skill and lifecycle hook bytes are unchanged. The public ZIP
+retains all four native events and executable hook permissions. DOX persistence
+still requires CLI 0.15.11 or newer; older compatible runtimes remain preview-only.
 
 ## Review Note
 
@@ -98,13 +98,22 @@ this boundary and follow [OpenAI compatibility guidance](https://developers.open
 
 Both the Git package and public-directory ZIP include SessionStart,
 SubagentStart, Stop, and SubagentStop hooks. Build the public upload using
-`packaging/build-codex-skills-only.py`. The portal's "Skills only" route means
+`python3 packaging/build-codex-skills-only.py tree-ring-memory-codex-skills-only-0.3.10.zip`.
+Upload that generated public ZIP; `tree-ring-memory-codex-0.3.10.zip` is the full
+native repository archive and retains its native skill frontmatter.
+The portal's "Skills only" route means
 there is no MCP server; it does not require stripping native command hooks.
 CLI 0.15.7 or newer repairs installer bootstrap. Host trust and a fresh recall
 receipt are required before claiming activation. Updating Git does not update
 a reviewed directory snapshot; submit the versioned ZIP separately.
 
-Package validation covers deterministic ZIP bytes, canonical hook definitions,
-and executable permissions. Older local scaffold validators that reject all
+The portal's `skill_metadata_ignored` warning identifies ignored legacy metadata;
+it does not itself block submission. The public profile removes that warning
+and supplies the separate supported skill interface. Package validation covers
+deterministic ZIP bytes, preserved skill instructions, public interface fields,
+canonical hook definitions, and executable permissions. It does not establish
+portal acceptance, security-scan completion, or verified developer identity.
+See the [submission error reference](https://developers.openai.com/plugins/deploy/submission-errors).
+Older local scaffold validators that reject all
 `hooks` fields are incompatible with the current published contract. Use native
 host validation and the [current manifest specification](https://developers.openai.com/plugins/build/plugins).

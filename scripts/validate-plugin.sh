@@ -30,8 +30,8 @@ root = Path(".")
 manifest = json.loads((root / ".codex-plugin/plugin.json").read_text())
 if manifest.get("name") != "tree-ring-memory":
     raise SystemExit("plugin name must remain tree-ring-memory")
-if manifest.get("version") != "0.3.9":
-    raise SystemExit("wrapper version must be 0.3.9")
+if manifest.get("version") != "0.3.10":
+    raise SystemExit("wrapper version must be 0.3.10")
 
 interface = manifest.get("interface", {})
 prompts = interface.get("defaultPrompt", [])
